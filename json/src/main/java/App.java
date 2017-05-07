@@ -1,4 +1,4 @@
-package json;
+import json.JSONBuilder;
 
 /**
  * Hello world!
