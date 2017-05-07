@@ -17,5 +17,6 @@ public class DslApp {
         LOG.info("Range query: \n{}", rangeQuery("age", 15, 30, false, true));
         LOG.info("Range query: \n{}", rangeQuery("age", 15, null, true, false));
         LOG.info("Range query: \n{}", rangeQuery("age", "2017-05-01", null, true, false));
+        LOG.info("Term: \n{}", termQuery("name", "peter").getJSONObject("term"));
     }
 }

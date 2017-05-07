@@ -1,6 +1,7 @@
 package es.query;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import json.JSONBuilder;
 
 /**
@@ -16,6 +17,16 @@ public class QueryBuilder extends JSONBuilder {
     public QueryBuilder put(String key, Object value) {
         super.put(key, value);
         return this;
+    }
+
+    public QueryBuilder putJSONObject(JSONObject jsonObject) {
+        super.putAll(jsonObject);
+        return this;
+    }
+
+    @Override
+    public QueryBuilder getJSONObject(String key) {
+        return queryContent().putJSONObject(super.getJSONObject(key));
     }
 
     public static QueryBuilder termQuery(String fieldName, Object value) {
