@@ -2,6 +2,8 @@ package json;
 
 import com.alibaba.fastjson.JSONObject;
 
+import java.util.Map;
+
 /**
  * Created by Peter on 2017/5/6.
  */
@@ -19,6 +21,17 @@ public class JSONBuilder extends JSONObject {
     public JSONBuilder put(String key, Object value) {
         super.put(key, value);
         return this;
+    }
+
+
+    public JSONBuilder putJSONObject(JSONObject jsonObject) {
+        super.putAll(jsonObject);
+        return this;
+    }
+
+    @Override
+    public JSONBuilder getJSONObject(String key) {
+        return json().putJSONObject(super.getJSONObject(key));
     }
 
     public String toString(boolean prettyFormat, int spaces) {
