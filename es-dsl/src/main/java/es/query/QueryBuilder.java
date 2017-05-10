@@ -4,6 +4,9 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import json.JSONBuilder;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * Created by Peter on 2017/5/7.
  */
@@ -11,6 +14,14 @@ public class QueryBuilder extends JSONBuilder {
 
     public static QueryBuilder queryContent() {
         return new QueryBuilder();
+    }
+    public static QueryBuilder queryContent(Map<String, Object> map) {
+        return new QueryBuilder(map);
+    }
+
+    public QueryBuilder() {}
+    public QueryBuilder(Map<String, Object> map) {
+        super(map);
     }
 
     @Override
@@ -26,14 +37,14 @@ public class QueryBuilder extends JSONBuilder {
 
     @Override
     public QueryBuilder getJSONObject(String key) {
-        return queryContent().putJSONObject(super.getJSONObject(key));
+        return queryContent(super.getJSONObject(key));
     }
 
     public static QueryBuilder termQuery(String fieldName, Object value) {
         return queryContent().put("term", json(fieldName, value));
     }
 
-    public static QueryBuilder termsQuery(String fieldName, Object... values) {
+    public static QueryBuilder termsQuery(String fieldName, List<? extends Object> values) {
         return queryContent().put("terms", json(fieldName, values));
     }
 
@@ -43,7 +54,7 @@ public class QueryBuilder extends JSONBuilder {
             content.put(includeLower ? "gte" : "gt", from);
         }
         if (to != null) {
-            content.put(includeLower ? "lte" : "lt", to);
+            content.put(includeUpper ? "lte" : "lt", to);
         }
         return queryContent().put("range", json(fieldName, content));
     }
@@ -52,12 +63,33 @@ public class QueryBuilder extends JSONBuilder {
         return rangeQuery(fieldName, from, to, false, false);
     }
 
-    public static QueryBuilder boolFilter(JSONArray filterArray) {
+    public static QueryBuilder boolFilter(BoolType boolType, JSONArray filterArray) {
         return queryContent()
-                .put("query",
-                        json("bool",
-                                json("filter", filterArray)
-                        ))
-                ;
+                .put("bool",
+                        json(boolType.toString(), filterArray)
+                );
+    }
+
+    public static enum BoolType {
+        MUST, MUST_NOT, FILTER, SHOULD;
+
+        public String toString() {
+            String result = "should";
+            switch (this) {
+                case MUST:
+                    result = "must";
+                    break;
+                case MUST_NOT:
+                    result = "must_not";
+                    break;
+                case SHOULD:
+                    result = "should";
+                    break;
+                case FILTER:
+                    result = "filter";
+                    break;
+            }
+            return result;
+        }
     }
 }

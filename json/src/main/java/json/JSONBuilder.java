@@ -12,18 +12,17 @@ public class JSONBuilder extends JSONObject {
     public static JSONBuilder json() {
         return new JSONBuilder();
     }
-    public static JSONBuilder json(JSONObject jo) {
-        return new JSONBuilder(jo);
+    public static JSONBuilder json(Map<String, Object> map) {
+        return new JSONBuilder(map);
     }
-
     public static JSONBuilder json(String key, Object value) {
         return new JSONBuilder().put(key, value);
     }
 
     public JSONBuilder() {}
 
-    public JSONBuilder(JSONObject jo) {
-        super(jo);
+    public JSONBuilder(Map<String, Object> map) {
+        super(map);
     }
 
     @Override
@@ -32,15 +31,9 @@ public class JSONBuilder extends JSONObject {
         return this;
     }
 
-
-    public JSONBuilder putJSONObject(JSONObject jsonObject) {
-        super.putAll(jsonObject);
-        return this;
-    }
-
     @Override
     public JSONBuilder getJSONObject(String key) {
-        return new JSONBuilder(super.getJSONObject(key));
+        return json(super.getJSONObject(key));
     }
 
     public String toString(boolean prettyFormat, int spaces) {
@@ -64,3 +57,4 @@ public class JSONBuilder extends JSONObject {
         return toString(true, 2);
     }
 }
+
