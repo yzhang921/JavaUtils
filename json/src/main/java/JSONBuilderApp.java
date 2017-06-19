@@ -37,5 +37,7 @@ public class JSONBuilderApp {
         System.out.println(json("filter", ja));
 
         System.out.println(jb3.getJSONObject("agg").put("append", "aa"));
+
+        System.out.println(json("filter", null));
     }
 }
