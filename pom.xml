@@ -9,6 +9,8 @@
         <module>json</module>
         <module>es-dsl</module>
         <module>es</module>
+        <module>encryption</module>
+        <module>common</module>
     </modules>
     <packaging>pom</packaging>
 
