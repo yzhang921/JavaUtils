@@ -1,12 +1,12 @@
 package util.sm3;
 
-import com.ctrip.fin.util.encryption.ByteUtils;
+import util.encryption.ByteUtils;
 import org.apache.commons.lang3.time.StopWatch;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.ctrip.fin.util.sm3.Convert.*;
+import static util.sm3.Convert.*;
 
 /**
  * Created by zyong on 2017/6/8.
